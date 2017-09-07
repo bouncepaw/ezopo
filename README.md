@@ -5,9 +5,10 @@ Yet another static site generator.
 1. Engine is not aiming to be user-frinedly,
 2. Engine generates ready HTML files, that one can use any way they want:
    1. GitHub Pages,
-   2. Own server,
-   3. Locally,
-   4. etc.
+   2. Surge,
+   3. Own server,
+   4. Locally,
+   5. etc.
 3. Pages are written in `.md` files.
 
 ## Installation
@@ -19,7 +20,7 @@ Read more about usage in `usage.md` file.
 ## Example
 Try it yourself! You'll need Crystal compiler. First, clone the repo:
 ```bash
-git clone https://github.com/bouncepaw/vikiilo.git
+git clone https://github.com/bouncepaw/ezopo.git
 cd ezopo/example_wiki
 ```
 

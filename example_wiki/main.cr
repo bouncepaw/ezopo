@@ -1,3 +1,3 @@
-require "../vikiilo.cr"
+require "../ezopo.cr"
 
-Vikiilo.basic
+Ezopo.basic

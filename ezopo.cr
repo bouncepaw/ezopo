@@ -3,7 +3,8 @@ require "markdown"
 
 module Ezopo
 
-  # parses all pages, the grand-magician of vikiilo
+  # Basic plugin
+  # Turns each .md file in pages/ into .html and puts it in site/
   def self.basic
     puts "#{Time.now} Current directory: #{Dir.current}"
 
@@ -36,5 +37,25 @@ module Ezopo
   def self.gen_page(page_name : String, page : String) : String
     layout = self.gen_layout page_name
     layout[0] + Markdown.to_html(page) + layout[1]
+  end
+
+  # Future plugins:
+
+  # Surge plugin
+  # Send to surge.sh with ease
+  def self.surge
+    puts "The support of surge.sh is not done yet"
+  end
+
+  # Github Pages plugin
+  # Send to github pages with ease
+  def self.gh_pages
+    puts "The support of Github Pages isn ot done yet"
+  end
+
+  # Template plugin
+  # Implements templates
+  def self.template
+    puts "The support of templates is not done yet"
   end
 end
