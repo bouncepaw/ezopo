@@ -1,5 +1,5 @@
-# Vikiilo (WARNING: WIP)
-Yet another wiki engine (I think so).
+# Ezopo (WARNING: WIP)
+Yet another static site generator.
 
 ## Specifics
 1. Engine is not aiming to be user-frinedly,
@@ -11,7 +11,7 @@ Yet another wiki engine (I think so).
 3. Pages are written in `.md` files.
 
 ## Installation
-I will make shard someday, for now just use `vikiilo.cr`.
+I will make shard someday, for now just use `ezopo.cr`.
 
 ## Usage
 Read more about usage in `usage.md` file.
@@ -20,7 +20,7 @@ Read more about usage in `usage.md` file.
 Try it yourself! You'll need Crystal compiler. First, clone the repo:
 ```bash
 git clone https://github.com/bouncepaw/vikiilo.git
-cd vikiilo/example_wiki
+cd ezopo/example_wiki
 ```
 
 Now write some `.md` files in `pages` directory. I wrote one for lazy people. Now compile and run `wiki.cr`:
@@ -32,5 +32,4 @@ Check `site` directory.
 
 ## Coming soon
 1. Plugins
-2. Themes
-3. Shard
+2. Shard

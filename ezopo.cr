@@ -1,7 +1,7 @@
-# Vikiilo version 0.9.0 by bouncepaw <bouncepaw2@yandex.ru>
+# Ezoop version 0.9.0 by bouncepaw <bouncepaw2@ya.ru>
 require "markdown"
 
-module Vikiilo
+module Ezopo
 
   # parses all pages, the grand-magician of vikiilo
   def self.basic

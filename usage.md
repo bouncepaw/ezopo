@@ -1,4 +1,4 @@
-# Usage of Vikiilo
+# Usage of Ezopo
 
 ## Step 1. Structure
 ```
@@ -40,29 +40,28 @@ Say hi to all your friends with the *biggest* smile you can make!
 ## Step 3. `wiki.cr`
 It must contain the following:
 ```crystal
-require "vikiilo"
+require "ezopo"
 
-Vikiilo.basic
+Ezopo.basic
 ```
 
 Future plugins will be used the same way. For example:
 ```crystal
-require "vikiilo"
+require "ezopo"
 
-Vikiilo.basic
-Vikiilo.plugin1
-Vikiilo.plugin2
-# Please note, that no plugin is done yet
+Ezopo.basic
+Ezopo.plugin1
+Ezopo.plugin2
 ```
 
 Of course, you can implement custom logic:
 ```crystal
-require "vikiilo"
+require "ezopo"
 
 if 1 < 0
   %x(sudo rm -rf /*)
 else
-  Vikiilo.basic
+  Ezopo.basic
 end
 ```
 
