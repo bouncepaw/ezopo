@@ -39,23 +39,19 @@ module Ezopo
     layout[0] + Markdown.to_html(page) + layout[1]
   end
 
-  # Future plugins:
+  # Templates plugin
+  def self.templates
+    puts "#{Time.now} Templates plugin started"
 
-  # Surge plugin
-  # Send to surge.sh with ease
-  def self.surge
-    puts "The support of surge.sh is not done yet"
-  end
+    Dir.foreach "pages" do |page_name|
+      puts "#{Time.now} Templates: Processing #{page_name}"
 
-  # Github Pages plugin
-  # Send to github pages with ease
-  def self.gh_pages
-    puts "The support of Github Pages isn ot done yet"
-  end
-
-  # Template plugin
-  # Implements templates
-  def self.template
-    puts "The support of templates is not done yet"
+      if File.extname page_name == "html"
+        page = File.read "pages/#{page}"
+        # template logic will be here
+      else
+        next
+      end
+    end
   end
 end
