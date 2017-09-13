@@ -1,5 +1,5 @@
 # Ezopo (WARNING: WIP)
-Yet another static site generator.
+Static site generator.
 
 ## Specifics
 1. Engine is not aiming to be user-frinedly,
@@ -9,10 +9,11 @@ Yet another static site generator.
    3. Own server,
    4. Locally,
    5. etc.
-3. Pages are written in `.md` files.
+3. Pages are written in `.md` files,
+4. Dead-simple plugin system.
 
 ## Installation
-I will make shard someday, for now just use `ezopo.cr`.
+I will make shard someday, for now use `ezopo.cr`.
 
 ## Usage
 Read more about usage in `usage.md` file.
@@ -31,6 +32,3 @@ crystal wiki.cr
 
 Check `site` directory.
 
-## Coming soon
-1. Plugins
-2. Shard
