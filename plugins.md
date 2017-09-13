@@ -22,23 +22,24 @@ Parser will parse a page until there is no template used. Multiple templates can
 ### 2. Creating a method
 In `ezopo.cr`, in `Ezopo` module I made this method:
 ```crystal
-# Templates plugin
 def self.templates
-end
-```
+  puts "#{Time.now} Templates: Plugin started"
 
-First, we need to iterate over each `.html` file in `pages/`:
-```crystal
-Dir.foreach "pages" do |page_name|
-  puts "#{Time.now} Templates: Processing #{page_name}"
+  templates_hash = self.gen_templates
+  puts "#{Time.now} Templates: Generated templates_hash"
 
-  if File.extname page_name == "html"
-    page = File.read "pages/#{page}"
-    # template logic will be here
-  else
-    next
+  Dir.foreach "pages" do |page_name|
+    puts "#{Time.now} Templates: Processing #{page_name}"
+
+    if File.extname page_name == "html"
+      self.parse_templates File.read "pages/#{page_name}"
+    end
   end
+
+  puts "#{Time.now} Templates: plugin finished"
 end
 ```
+
+It makes the most of the work: logs, iterates files. Methods `Ezopo.gen_templates` and `Ezopo.parse_templates` generate templates and parse templates respectively. Let's code them:
 
 *TODO*: finish it. regex, gsub and other hard things. that'll be spicy
