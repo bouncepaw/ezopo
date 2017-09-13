@@ -65,7 +65,15 @@ module Ezopo
   # Creates templates hash, where key is template file name and value is its
   # HTML contents
   def self.gen_templates : Hash
-    # magic will be here
+    templates_hash = {} of String => String
+
+    Dir.foreach "templates" do |filename|
+      begin
+        templates_hash[File.basename(filename, ".html")] = File.read filename
+      rescue
+        next
+      end
+    end
   end
 
   # Templates plugin helper
