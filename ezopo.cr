@@ -78,7 +78,20 @@ module Ezopo
 
   # Templates plugin helper
   # Replaces all {{mustaches}} with corresponding template in `templates_hash`
-  def self.parse_templates(page : String, templates_hash : Hash) : Nil
-    # magic will be here
+  # @vladfaust helped with it a little (he doesn't know about it)
+  #
+  # Example:
+  # Ezopo.parse_templates("Hello {{world}}!", {"world" => "Ezopo"})
+  # => Hello Ezopo!
+  def self.parse_templates(page : String, templates_hash : Hash(String, String))
+    curled_data = templates_hash.reduce({} of String => String) do |hash, (k, v)|
+      hash["{{#{k}}}"] = v
+      hash
+    end
+
+    regex = Regex.new("(" + curled_data.keys.join("|") + ")")
+    page = page.gsub(regex, curled_data)
+    page
   end
 end
+
