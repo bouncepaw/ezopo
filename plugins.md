@@ -2,44 +2,92 @@
 Ezopo uses dead simple plugin system, because life is too short for compicated things. This document covers both creating and usage of plugins.
 
 ## Creating a plugin
-Each plugin in Ezopo is a Crystal method, which iterates over each file in a directory, does something in it.
+Each plugin in Ezopo is a Crystal method, which iterates over each file in a directory and does something in it.
 
 Plugins are declared in `Ezopo` module. To create a plugin you need to know Crystal. Let's make a plugin for templates.
 
 ### 1. Idea
-This plugin will implement templates, like in MediaWiki, but with no argument support (coming soon). Plugin will check each `.html` file in `site/` directory, and replace each `{{template_name}}` with contents of corresponding `.html` file in `templates/` directory. For example:
-```markdown
-# pages/Page.html before plugin
-...{{example}}...
-# templates/example.html
-<b>This is template</b>
-# pages/Page.html after plugin
-...<b>This is template!</b>...
+1. In `templates/` user creates any text files. Its name is template's name and its content is template's content.
+2. Plugin generates a hash where keys are filenames and values are their contents.
+3. Plugin replaces every template's name in page with its content.
+
+For example, we have this templates hash:
+```crystal
+{
+  "hello" => "good day",
+  "ld" => "dl"
+}
 ```
 
-Parser will parse a page until there is no template used. Multiple templates can be used inside one page. Templates can be used inside each other.
+And page `test.md`:
+```markdown
+Hello, hello to the wonderful world!
+```
 
-### 2. Creating a method
-In `ezopo.cr`, in `Ezopo` module I made this method:
+After parsing by `Basic` plugin and after parsing by `Templates` plugin (the one I am describing right now), file turns to:
+```html
+...<p>Hello, good day to the wonderful wordl!</p>...
+```
+
+### 2. Coding
+I made three methods in module `Ezopo`:
+
+`Ezopo.templates` is the main:
 ```crystal
-def self.templates
+def self.templates : Nil
   puts "#{Time.now} Templates: Plugin started"
 
   templates_hash = self.gen_templates
   puts "#{Time.now} Templates: Generated templates_hash"
 
-  Dir.foreach "pages" do |page_name|
-    puts "#{Time.now} Templates: Processing #{page_name}"
-
-    if File.extname page_name == "html"
-      self.parse_templates File.read "pages/#{page_name}"
+  Dir.foreach "site" do |filename|
+    begin
+      puts "#{Time.now} Templates: Processing #{filename}"
+      File.write("site/#{filename}",
+        self.parse_templates(
+          File.read("site/#{filename}"), templates_hash))
+    rescue
+      puts "#{Time.now} Templates: something is wrong with #{filename}, next"
     end
   end
 
-  puts "#{Time.now} Templates: plugin finished"
+  puts "#{Time.now} Templates: Plugin finished"
 end
 ```
 
-It makes the most of the work: logs, iterates files. Methods `Ezopo.gen_templates` and `Ezopo.parse_templates` generate templates and parse templates respectively. Let's code them:
+`Ezopo.gen_templates` generates templates hash:
+```crystal
+def self.gen_templates()
+  puts "#{Time.now} Templates: gen_templates() started"
+  templates_hash = {} of String => String
 
-*TODO*: finish it. regex, gsub and other hard things. that'll be spicy
+  Dir.foreach "templates" do |filename|
+    begin
+      puts "#{Time.now} Templates: gen_templates() processing #{filename}"
+      templates_hash[filename] = File.read("templates/#{filename}").chomp
+    rescue
+      puts "#{Time.now} Templates: gen_templates() something is wrong" +
+        "with #{filename}, next"
+    end
+  end
+
+  templates_hash
+end
+```
+
+`Ezopo.parse_templates` simply parses the page:
+```crystal
+def self.parse_templates(page : String, templates_hash : Hash(String, String))
+  regex = Regex.new("(" + templates_hash.keys.join("|") + ")")
+  page = page.gsub(regex, templates_hash)
+  page
+end
+```
+
+### 3. Usage
+This plugin should be used after `Basic` plugin:
+```crystal
+# somewhere in hard-to-understand crystal code
+Ezopo.basic     # markdown -> html
+Ezopo.templates # parses templates
+```

@@ -50,47 +50,50 @@ module Ezopo
     templates_hash = self.gen_templates
     puts "#{Time.now} Templates: Generated templates_hash"
 
-    Dir.foreach "pages" do |page_name|
-      puts "#{Time.now} Templates: Processing #{page_name}"
-
-      if File.extname page_name == "html"
-        self.parse_templates(File.read "pages/#{page_name}", templates_hash)
+    Dir.foreach "site" do |filename|
+      begin
+        puts "#{Time.now} Templates: Processing #{filename}"
+        File.write("site/#{filename}",
+          self.parse_templates(
+            File.read("site/#{filename}"), templates_hash))
+      rescue
+        puts "#{Time.now} Templates: something is wrong with #{filename}, next"
       end
     end
 
-    puts "#{Time.now} Templates: plugin finished"
+    puts "#{Time.now} Templates: Plugin finished"
   end
 
   # Templates plugin helper
-  # Creates templates hash, where key is template file name and value is its
-  # HTML contents
-  def self.gen_templates : Hash
+  # Creates templates hash, where key is template file name and
+  # value is its content
+  def self.gen_templates()
+    puts "#{Time.now} Templates: gen_templates() started"
     templates_hash = {} of String => String
 
     Dir.foreach "templates" do |filename|
       begin
-        templates_hash[File.basename(filename, ".html")] = File.read filename
+        puts "#{Time.now} Templates: gen_templates() processing #{filename}"
+        templates_hash[filename] = File.read("templates/#{filename}").chomp
       rescue
-        next
+        puts "#{Time.now} Templates: gen_templates() something is wrong" +
+          "with #{filename}, next"
       end
     end
+
+    templates_hash
   end
 
   # Templates plugin helper
-  # Replaces all {{mustaches}} with corresponding template in `templates_hash`
-  # @vladfaust helped with it a little (he doesn't know about it)
+  # Reads the file. If found string that is equal to a key in `templates_hash`,
+  # replaces it with corresponding value.
   #
   # Example:
-  # Ezopo.parse_templates("Hello {{world}}!", {"world" => "Ezopo"})
+  # Ezopo.parse_templates("Hello world!", {"world" => "Ezopo"})
   # => Hello Ezopo!
   def self.parse_templates(page : String, templates_hash : Hash(String, String))
-    curled_data = templates_hash.reduce({} of String => String) do |hash, (k, v)|
-      hash["{{#{k}}}"] = v
-      hash
-    end
-
-    regex = Regex.new("(" + curled_data.keys.join("|") + ")")
-    page = page.gsub(regex, curled_data)
+    regex = Regex.new("(" + templates_hash.keys.join("|") + ")")
+    page = page.gsub(regex, templates_hash)
     page
   end
 end

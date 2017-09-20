@@ -18,17 +18,3 @@ I will make shard someday, for now use `ezopo.cr`.
 ## Usage
 Read more about usage in `usage.md` file.
 
-## Example
-Try it yourself! You'll need Crystal compiler. First, clone the repo:
-```bash
-git clone https://github.com/bouncepaw/ezopo.git
-cd ezopo/example_wiki
-```
-
-Now write some `.md` files in `pages` directory. I wrote one for lazy people. Now compile and run `wiki.cr`:
-```bash
-crystal wiki.cr
-```
-
-Check `site` directory.
-
