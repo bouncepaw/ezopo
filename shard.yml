@@ -1,10 +1,14 @@
 name: ezopo
 authors:
   - Timur Ismagilov <bouncepaw2@ya.ru>
+version: 1.0.0
+license: MIT
+
+dependencies:
+
 description: |
   Static site generator with plugin support
+
 targets:
   ezopo:
     main: src/ezopo.cr
-version: 1.0.0
-license: MIT
