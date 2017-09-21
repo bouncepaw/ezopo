@@ -16,7 +16,7 @@ Read more about usage in `usage.md` file.
 - Plugins are Crystal methods.
 
 ## Installation
-Write this in `shards.yaml`:
+Write this in `shard.yml`:
 ```yaml
 dependencies:
   ezopo:
