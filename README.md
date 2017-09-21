@@ -1,20 +1,27 @@
-# Ezopo (WARNING: WIP)
+# Ezopo
 Static site generator.
 
+```crystal
+require "ezopo"
+
+Ezopo.basic     # markdown -> html
+Ezopo.templates # Templates plugin
+```
+
+Read more about usage in `usage.md` file.
+
 ## Specifics
-1. Engine is not aiming to be user-frinedly,
-2. Engine generates ready HTML files, that one can use any way they want:
-   1. GitHub Pages,
-   2. Surge,
-   3. Own server,
-   4. Locally,
-   5. etc.
-3. Pages are written in `.md` files,
-4. Dead-simple plugin system.
+- Engine generates static `.html` files,
+- Pages are written in `.md` files,
+- Plugins are Crystal methods.
 
 ## Installation
-I will make shard someday, for now use `ezopo.cr`.
+Write this in `shards.yaml`:
+```yaml
+dependencies:
+  ezopo:
+    github: bouncepaw/ezopo
+```
 
-## Usage
-Read more about usage in `usage.md` file.
+I haven't tested that yet actually :smile:
 
